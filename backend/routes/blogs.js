@@ -1,37 +1,27 @@
 const express = require("express");
-const Blog = require("../models/blogModel");
+const { create } = require("../models/blogModel");
 const router = express.Router();
+const {
+  createBlog,
+  getAllBlogs,
+  getSingleBlog,
+  deleteBlog,
+  updateBlog,
+} = require("../controllers/blogController");
 
 // GET all blogs
-router.get("/", (req, res) => {
-  res.json({ mssg: "I am lesbian" });
-  console.log("GET all blogs");
-});
+router.get("/", getAllBlogs);
 
 // GET a single blog
-router.get("/:id", (req, res) => {
-  res.json({ mssg: "GET a single blog" });
-});
+router.get("/:id", getSingleBlog);
 
 // POST a blog
-router.post("/", async (req, res) => {
-  const { title, content, author } = req.body;
-  try {
-    const blog = await Blog.create({ title, content, author });
-    res.status(200).json(blog);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
+router.post("/", createBlog);
 
 // DELETE a blog
-router.delete("/:id", (req, res) => {
-  res.json({ mssg: "DELETE a blog" });
-});
+router.delete("/:id", deleteBlog);
 
 //UPDATE a blog
-router.patch("/:id", (req, res) => {
-  res.json({ mssg: "UPDATE a blog" });
-});
+router.patch("/:id", updateBlog);
 
 module.exports = router;

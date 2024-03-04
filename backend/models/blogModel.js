@@ -13,7 +13,7 @@ const blogSchema = new Schema(
     },
     author: {
       type: String,
-      required: false,
+      required: [true, "Author is required"],
     },
   },
   { timestamps: true }

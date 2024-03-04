@@ -31,6 +31,23 @@ const getSingleBlog = async (req, res) => {
 // POST a blog
 const createBlog = async (req, res) => {
   const { title, content, author } = req.body;
+
+  let emptyFields = [];
+
+  if (!title) {
+    emptyFields.push("title");
+  }
+  if (!content) {
+    emptyFields.push("content");
+  }
+  if (!author) {
+    emptyFields.push("author");
+  }
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: `Please fill in all fields:`, emptyFields });
+  }
   // add document to db
   try {
     const blog = await Blog.create({ title, content, author });
